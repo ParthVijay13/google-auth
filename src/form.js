@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { jwtDecode } from "jwt-decode";
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider} from '@react-oauth/google';
+import {  GoogleLogin } from '@react-oauth/google';
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');

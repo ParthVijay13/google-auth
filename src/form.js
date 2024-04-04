@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { GoogleOAuthProvider} from '@react-oauth/google';
 import {  GoogleLogin } from '@react-oauth/google';
-
+import  axios  from 'axios';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,18 +16,37 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-    setEmail('');
-    setPassword('');
+  
+    try {
+      await axios.post("http://localhost:3000/", {
+        email: email,
+        password: password,
+      });
+  
+      // Clear the form fields
+      setEmail("");
+      setPassword("");
+  
+      // Clear the form fields in the UI
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+  
+      // Redirect the user to the homepage or another page
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error during login:", error);
+  
+      // Display a more user-friendly error message
+      alert("Invalid email or password. Please try again.");
+    }
   };
 
   return (
     <div className="form-container">
       <h2>Login Form</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} action="POST">
         <div className="form-group">
           <label htmlFor="email">Email:</label>
           <input

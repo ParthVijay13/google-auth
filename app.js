@@ -1,7 +1,8 @@
 // import collection from '../mongo';
 const express = require('express');
 const collection = require('./mongo');
-// const collection = express('./mongo.js');
+const UserSchema  = require('./mongo')
+
 const cors = require('cors');
 
 const app = express();
@@ -20,6 +21,17 @@ app.post("/",async (req,res) => {
     }
     await collection.insertMany([data]);
 })
+app.post("/",async (req,res) => {
+    const{email,name,avatar}  = req.body;
+    const data = {
+        email:email,
+        name:name,
+        avatar:avatar   
+    }
+    await UserSchema.insertMany([data]);
+})
+
+
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000")

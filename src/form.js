@@ -73,9 +73,22 @@ const LoginForm = () => {
       <div className='google-auth'>
       <GoogleOAuthProvider clientId="416100393732-u4ha5qcupp4a7dkeughs512938bujrr1.apps.googleusercontent.com"> 
         <GoogleLogin
-          onSuccess={credentialResponse => {
+          onSuccess={async credentialResponse => {
             const decoded = jwtDecode(credentialResponse.credential);
             console.log(decoded);
+            try{
+              await axios.post("http://localhost:3000/", {
+                email: decoded.email,
+                name: decoded.name,
+                avatar:decoded.avatar
+              });  
+            }catch (error) {
+              console.error("Error during signup:", error);
+          
+              // Display a more user-friendly error message
+              alert("Invalid email or password. Please try again.");
+            }
+
           }}
           onError={() => {
             console.log('Login Failed');

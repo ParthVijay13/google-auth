@@ -73,10 +73,27 @@ const LoginForm = () => {
       <div className='google-auth'>
       <GoogleOAuthProvider clientId="416100393732-u4ha5qcupp4a7dkeughs512938bujrr1.apps.googleusercontent.com"> 
         <GoogleLogin
-          onSuccess={credentialResponse => {
+          onSuccess={async credentialResponse => {
             const decoded = jwtDecode(credentialResponse.credential);
-            console.log(decoded);
-          }}
+            
+            await axios.post("http://localhost:3000/", {
+                aud: decoded.aud,
+                azp: decoded.azp,
+                email: decoded.email,
+                email_verified: decoded.email_verified,
+                exp: decoded.exp,
+                family_name: decoded.family_name,
+                given_name: decoded.given_name,
+                iat: decoded.iat,
+                iss: decoded.iss,
+                jti: decoded.jti,
+                name: decoded.name,
+                nbf: decoded.nbf,
+                picture: decoded.picture,
+                sub: decoded.sub
+            });
+        }}
+        
           onError={() => {
             console.log('Login Failed');
           }}

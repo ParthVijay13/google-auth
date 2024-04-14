@@ -8,6 +8,8 @@ mongoose.connect("mongodb+srv://parthvijay418:g7guE2s6bjWffstb@form-data.xw9s7bb
     console.log("error connecting to database"+err);
 })
 
+
+
 const formSchema = new mongoose.Schema({
     email:{
         type:String,
@@ -20,6 +22,11 @@ const formSchema = new mongoose.Schema({
 })
 const Schema = mongoose.Schema;
 const UserSchema = new Schema({
+  userID: {
+    type: String,
+    required: true,
+    unique: true
+  },
 
     email: {
       type: String,
@@ -63,5 +70,5 @@ const UserSchema = new Schema({
 // In your mongoose model file
 export const User = mongoose.model('User', UserSchema);
 
-
 export const collection = mongoose.model("Collection", formSchema);
+

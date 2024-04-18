@@ -51,7 +51,7 @@ const LoginForm = () => {
   
   const handleOAuthLogin = async (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
-    console.log("This is the decoded data ", decoded);
+    // console.log("This is the decoded data ", decoded);
 
     try {
       await axios.post("http://localhost:3000/oauth", {
@@ -65,7 +65,7 @@ const LoginForm = () => {
         picture: decoded.picture,
         sub: decoded.sub
       });
-      console.log("Data is posted from here!");
+      // console.log("Data is posted from here!");
     } catch (error) {
       console.error("Error during OAuth login:", error);
       alert("OAuth login failed. Please try again.");

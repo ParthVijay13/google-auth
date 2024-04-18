@@ -21,6 +21,11 @@ app.post("/login", async (req, res) => {
         password: req.body.password,
         createdAt: new Date()
     };
+    const userExists = await User.exists({ email: form_data.email });
+
+    if (userExists) {
+        return res.status(409).send("User with this email already exists.");
+    }
     const user = new collection(form_data);
     try {
         await user.save();
@@ -63,3 +68,5 @@ app.post("/oauth", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });
+
+
